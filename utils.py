@@ -1,3 +1,9 @@
+from llama_index.core import SimpleDirectoryReader, VectorStoreIndex, SummaryIndex
+from llama_index.core.node_parser import SentenceSplitter
+from llama_index.core.tools import FunctionTool, QueryEngineTool
+from llama_index.core.vector_stores import MetadataFilters, FilterCondition
+from typing import List, Optional
+
 def get_doc_tools(
     file_path: str,
     name: str,
@@ -14,9 +20,9 @@ def get_doc_tools(
         query: str, 
         page_numbers: Optional[List[str]] = None
     ) -> str:
-        """Use to answer questions over a given paper.
+        """Use to answer questions over the MetaGPT paper.
     
-        Useful if you have specific questions over the paper.
+        Useful if you have specific questions over the MetaGPT paper.
         Always leave page_numbers as None UNLESS there is a specific page you want to search for.
     
         Args:
@@ -57,7 +63,8 @@ def get_doc_tools(
         name=f"summary_tool_{name}",
         query_engine=summary_query_engine,
         description=(
-            f"Useful for summarization questions related to {name}"
+            "Use ONLY IF you want to get a holistic summary of MetaGPT. "
+            "Do NOT use if you have specific questions over MetaGPT."
         ),
     )
 
